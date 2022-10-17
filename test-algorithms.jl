@@ -120,7 +120,7 @@ begin
         
         #M = cleaning(A, sol, func)   
         #calculate the solution by the method
-        e1, k1 = levenberg_maquardt(A, f, initial_value, dp)
+        e1, k1 = levenberg_marquardt(A, f, initial_value, dp)
         
         
         k = k + k1 #number of iteractions
@@ -139,7 +139,7 @@ end
 allfiles(model_string, initial_value, dp, num_files)=
 begin
    
-    dir_path = "/home/julia/Documents/4° ano/Otimização Não Linear/problems/"*model_string*"/"
+    dir_path = "./problems/"*model_string*"/"
     filelist = readdir(dir_path)
 
     #num_files = size(filelist)[1]
@@ -160,7 +160,109 @@ begin
        
         f(x, t) = Base.invokelatest(func, x, t)
           
-        e1, k1 = levenberg_maquardt(A, f, initial_value, dp)
+        e1, k1 = levenberg_marquardt(A, f, initial_value, dp)
+        
+        k = k + k1
+
+        e = e + norm(e1 - sol)
+        
+    end
+    
+    k = k / num_files
+    e = e / num_files
+   
+    
+
+    println("Número médio de iterações o cada parâmetro: ", k)
+    println("Valor médio do erro para o parâmetro: ", e)
+end
+
+
+"""
+Goal: avaliate the method 
+
+#### Input:
+    model type - model_string(parabola|cubic|gaussian|log)
+    initial_value - initial value
+    dp - type of damping parameter(fixed number, DP1, DP2, DP3, DP4, DP5)
+    num_files(optional) - the number of files to be used. If not given, it will be used all files os the problem
+    gradient of the model
+
+#### Output:
+    k - the medium number of iteractions using the damping parameter given
+    e - the medium error between the solution found and the solution given using the damping parameter given
+"""
+allfiles_grad(model_string, initial_value, dp, grad)=
+begin
+    
+    #directory path
+    dir_path = "/home/julia/Documents/4° ano/Otimização Não Linear/problems/"*model_string*"/"
+    filelist = readdir(dir_path)
+
+    #number of files
+    num_files = size(filelist)[1]
+
+    #counter of iteractions
+    iteractions = 0
+
+    k = 0
+    e = 0
+    for i = 1 : num_files 
+        sample_test = sample_parsing(dir_path*filelist[i])
+
+        name = sample_test.name
+        A = sample_test.data
+        n = sample_test.n
+        dim = sample_test.dim
+        func = sample_test.model
+        sol = sample_test.solution
+       
+        #covert the type of f
+        f(x, t) = Base.invokelatest(func, x, t)
+        
+        #M = cleaning(A, sol, func)   
+        #calculate the solution by the method
+        e1, k1 = levenberg_marquardt_grad(A, f, grad, initial_value, dp)
+        
+        
+        k = k + k1 #number of iteractions
+        e = e + norm(e1 - sol) #error
+        
+    end
+    
+    k = k / num_files
+    e = e / num_files
+   
+    
+
+    println("Número médio de iterações o parâmetro: ", k)
+    println("Valor médio do erro para o parâmetro: ", e)
+end
+allfiles_grad(model_string, initial_value, dp, num_files, grad)=
+begin
+   
+    dir_path = "./problems/"*model_string*"/"
+    filelist = readdir(dir_path)
+
+    #num_files = size(filelist)[1]
+
+    iteractions = 0
+
+    k = 0
+    e = 0
+    for i = 1 : num_files 
+        sample_test = sample_parsing(dir_path*filelist[i])
+
+        name = sample_test.name
+        A = sample_test.data
+        n = sample_test.n
+        dim = sample_test.dim
+        func = sample_test.model
+        sol = sample_test.solution
+       
+        f(x, t) = Base.invokelatest(func, x, t)
+          
+        e1, k1 = levenberg_marquardt_grad(A, f, grad, initial_value, dp)
         
         k = k + k1
 
