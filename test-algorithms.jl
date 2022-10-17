@@ -139,7 +139,7 @@ end
 allfiles(model_string, initial_value, dp, num_files)=
 begin
    
-    dir_path = "./problems/"*model_string*"/"
+    dir_path = "/home/julia/Documents/4° ano/Otimização Não Linear/problems/"*model_string*"/"
     filelist = readdir(dir_path)
 
     #num_files = size(filelist)[1]
