@@ -7,28 +7,51 @@ Goal: computes the Jacobian Matrix
 
 #### Input:
     A - data matrix
+    f - model to fit
     t - initial vector
     n - number of observations
-    dim - dimension of model
-    f - model to fit
+    J - a matrix to be overscript   
 
 #### Output:
     J - jacobian matrix
 """
-jacobian(A, f, t, n, dim, J)=
+jacobian(A, f, t, n, J)=
 begin
     #J = zeros(n, dim)
     for j = 1 : n
         #calculate r_i
         r(t1) = A[j, 2] - f(A[j, 1], t1)
-        for k = 1 : dim
-            #find the gradient
-            J[j, k] = ForwardDiff.gradient(r, t)[k]
-        end
+       
+        #find the gradient
+        J[j, :] = ForwardDiff.gradient(r, t)[:]
     end
     return J
 end
 
+
+"""
+Goal: computes the Jacobian Matrix
+
+#### Input:
+    A - data matrix
+    grad - gradient of the model
+    t - initial vector
+    n - number of observations
+    J - a matrix to be overscript   
+
+#### Output:
+    J - jacobian matrix
+"""
+jacobian_grad(A, grad, t, n, J)=
+begin
+    #J = zeros(n, dim)
+ 
+    for j = 1 : n
+        #given gradient
+        J[j, :] = - grad(A[j, 1], t)[:]
+    end
+    return J
+end
 
 """
 Goal: computes the Residual Matrix
@@ -130,7 +153,7 @@ end
 
 
 """
-Goal: computes an approximate solution to the problem using the Levenberg Maquardt method
+Goal: computes an approximate solution to the problem using the Levenberg Marquardt method
 
 #### Input:
     A - data matrix
@@ -144,7 +167,7 @@ Goal: computes an approximate solution to the problem using the Levenberg Maquar
     t - approximate solution
     k - number of iteractions
 """
-levenberg_maquardt(A, f, t, dp, ϵ = 1.0e-10, itmax = 1000)=
+levenberg_marquardt(A, f, t, dp, ϵ = 1.0e-10, itmax = 1000)=
 begin
     
     n, m = size(A)
@@ -155,7 +178,7 @@ begin
     J = zeros(n, dim)
     J_1 = zeros(dim, dim)
     
-    J = jacobian(A, f, t, n, dim, J)
+    J = jacobian(A, f, t, n, J)
     R = residual(A, f, t, n, R)
     
     while norm(transpose(J) * R) > ϵ && k < itmax
@@ -183,9 +206,55 @@ begin
         t = t + (a * d)
         k = k + 1
         
-        J = jacobian(A, f, t, n, dim, J)
+        J = jacobian(A, f, t, n, J)
         R = residual(A, f, t, n, R)
     end
     return t, k
 end
+
+levenberg_marquardt_grad(A, f, grad, t, dp, ϵ = 1.0e-10, itmax = 1000)=
+begin
+    
+    n, m = size(A)
+    dim = length(t)
+    k = 0
+    
+    R = zeros(n)
+    J = zeros(n, dim)
+    J_1 = zeros(dim, dim)
+    
+    J = jacobian_grad(A, grad, t, n, J)
+    R = residual(A, f, t, n, R)
+    
+    while norm(transpose(J) * R) > ϵ && k < itmax
+        
+        #calculate the damping parameter as the user says
+        λ = damping(A, R, J, f, t, dp, n)
+        #calulate J^T * J + \lambda * I
+        J_1 = auxiliar(J, dim, λ, J_1)
+        
+        #solve the system and find the direction
+        d = J_1 \ (- transpose(J) * R)
+        
+        a = 1.0
+        
+        #calculate the function
+        f1(t1) = 0.5 * norm(residual(A, f, t1, n)) ^ 2
+        
+        i = 0
+        #condição de armijo
+        while  f1(t + a * d) > f1(t) + 0.5 * a * transpose(transpose(J) * R) * d && i < itmax
+            a = 0.5 * a
+        end
+        
+        #update the data
+        t = t + (a * d)
+        k = k + 1
+        
+        J = jacobian_grad(A, grad, t, n, J)
+        R = residual(A, f, t, n, R)
+    end
+    return t, k
+end
+
 
