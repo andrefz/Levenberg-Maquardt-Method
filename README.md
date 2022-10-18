@@ -8,9 +8,13 @@ Marquardt para problema de quadrados mínimos.
 [relatorio-lm]: https://nbviewer.org/github/andrefz/Levenberg-Maquardt-Method/blob/main/tex/Levenberg_Marquardt_Method.pdf
 
 
-
 ## Reprodutibilidade
 
+Para reproduzir os experimentos relatados, basta executar o arquivo
+`Levenberg_Marquardt.ipynb` em um ambiente `IJulia`.
+
+O arquivo `algorithm.jl` disponibiliza uma implementação com diferenciação
+automática e outra cuja derivada do modelo é parâmetro.   
 
 ## Autores
 Os autores do repósitorio, listados em ordem alfabética, são:
