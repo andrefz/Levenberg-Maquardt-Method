@@ -28,7 +28,6 @@ begin
     return J
 end
 
-
 """
 Goal: computes the Jacobian Matrix
 
@@ -44,8 +43,7 @@ Goal: computes the Jacobian Matrix
 """
 jacobian_grad(A, grad, t, n, J)=
 begin
-    #J = zeros(n, dim)
- 
+    #J = zeros(n, dim) 
     for j = 1 : n
         #given gradient
         J[j, :] = - grad(A[j, 1], t)[:]
@@ -62,7 +60,6 @@ Goal: computes the Residual Matrix
     t - initial vector
     n - number of observations
     R(optional) - vector to be overscript
-
 
 #### Output:
     R - residual matrix
@@ -88,7 +85,6 @@ begin
     return R
 end
 
-
 """
 Goal: compute J^T * J + λI
 
@@ -111,7 +107,6 @@ begin
     end
     return J_1
 end
-
 
 """
 Goal: calculate the damping parameter
@@ -151,7 +146,6 @@ begin
     end
 end
 
-
 """
 Goal: computes an approximate solution to the problem using the Levenberg Marquardt method
 
@@ -160,8 +154,8 @@ Goal: computes an approximate solution to the problem using the Levenberg Marqua
     f - model function
     t - initial estimation
     dp- type of damping parameter(fixed number, DP1, DP2, DP3, DP4, DP5) 
-    ϵ(optional - 1.0e-9) - precision
-    itmax(optional - 1000) - maximum of iterations
+    ϵ (optional - 1.0e-9) - precision
+    itmax (optional - 1000) - maximum of iterations
 
 #### Output:
     t - approximate solution
@@ -169,7 +163,6 @@ Goal: computes an approximate solution to the problem using the Levenberg Marqua
 """
 levenberg_marquardt(A, f, t, dp, ϵ = 1.0e-10, itmax = 1000)=
 begin
-    
     n, m = size(A)
     dim = length(t)
     k = 0
@@ -197,7 +190,7 @@ begin
         f1(t1) = 0.5 * norm(residual(A, f, t1, n)) ^ 2
         
         i = 0
-        #condição de armijo
+        #armijo condition
         while  f1(t + a * d) > f1(t) + 0.5 * a * transpose(transpose(J) * R) * d && i < itmax
             a = 0.5 * a
         end
@@ -214,7 +207,6 @@ end
 
 levenberg_marquardt_grad(A, f, grad, t, dp, ϵ = 1.0e-10, itmax = 1000)=
 begin
-    
     n, m = size(A)
     dim = length(t)
     k = 0
@@ -242,7 +234,7 @@ begin
         f1(t1) = 0.5 * norm(residual(A, f, t1, n)) ^ 2
         
         i = 0
-        #condição de armijo
+        #armijo condition
         while  f1(t + a * d) > f1(t) + 0.5 * a * transpose(transpose(J) * R) * d && i < itmax
             a = 0.5 * a
         end

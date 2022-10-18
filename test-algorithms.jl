@@ -94,7 +94,7 @@ allfiles(model_string, initial_value, dp)=
 begin
     
     #directory path
-    dir_path = "/home/julia/Documents/4° ano/Otimização Não Linear/problems/"*model_string*"/"
+    dir_path = "./problems/"*model_string*"/"
     filelist = readdir(dir_path)
 
     #number of files
@@ -196,7 +196,7 @@ allfiles_grad(model_string, initial_value, dp, grad)=
 begin
     
     #directory path
-    dir_path = "/home/julia/Documents/4° ano/Otimização Não Linear/problems/"*model_string*"/"
+    dir_path = "./problems/"*model_string*"/"
     filelist = readdir(dir_path)
 
     #number of files

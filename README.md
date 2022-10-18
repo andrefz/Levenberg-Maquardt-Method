@@ -13,6 +13,7 @@ Marquardt para problema de quadrados mínimos.
 
 
 ## Autores
+Os autores do repósitorio, listados em ordem alfabética, são:
 
 * [@andrefz](https://github.com/andrefz) - _André F. Zanella_
 * [@juliaguizardi](https://github.com/JuliaGuizardi) - _Julia D. Guizardi_
