@@ -211,7 +211,7 @@ portuguese] % Para algoritmos em português.
 	\subsection{Função Quadrática}\label{quad}
 	Inicialmente, consideramos $x_0 = (1, 0, 0)$ e o parâmetro de $damping$ DP3 em um dos conjuntos de dados a serem analisados pela função quadrática. O resultado do método foi o ponto $x^* = (-1.6568, -6.0813, 0.1420)$ em apenas 14 iterações, quando a solução real do problema era $(-9.5, -8.5, 2.5).$ Veja o resultado na Figura \ref{fig1} (a).
 	
-	Usamos o programa para tirar a perturbação da matriz de dados e aplicamos no método. Com isso, naturalmente,  obtemos uma solução melhor para o problema e consideravelmente próxima da solução dada. Obtemos, com o parâmetro DP1 o ponto $x^* = (-9.4999, -8.4999, 2.4999)$ em 73 iterações. Observe na Figura \ref{fig1} (b).
+	Utilizamos o programa para retirar a perturbação da matriz de dados e aplicamos no método. Com isso, naturalmente,  obtemos uma solução melhor para o problema e consideravelmente próxima da solução dada. Obtemos, com o parâmetro DP1 o ponto $x^* = (-9.4999, -8.4999, 2.4999)$ em 73 iterações. Observe na Figura \ref{fig1} (b).
 	
 		\begin{figure}[H]
 		\centering 
@@ -242,20 +242,20 @@ portuguese] % Para algoritmos em português.
 			Parâmetro & Média das iterações & Média do erro\\
 			\hline
 			
-			DP1 & 16.7366 & 3.6247\\
+			DP1 & 16.7290 & 3.6247\\
 			\hline
 			DP2 & 990.9580 & 9.6436\\ \hline
-			DP3 & 61.1984 & 3.6247\\ \hline
-			DP4 & 837.4847 & 3.5187\\ \hline
-			DP5 & 411.5 & 0.6782\\ \hline
+			DP3 & 61.1946 & 3.6247\\ \hline
+			DP4 & 837.4885 & 3.5187\\ \hline
+			DP5 & 228.3893 & 3.6247\\ \hline
 			0.5 & 59.4923 & 3.6247\\		\hline	
 			
 		\end{tabular}
 	\end{table}
 	\subsection{Função Cúbica} \label{cub}
-		Seja $x_0 = (1, 0, 0,0)$ e o parâmetro de $damping$ DP3 em um dos conjuntos de dados a serem analisados pela função cúbica. O resultado do método foi o ponto $x^* = (-0.0517, 3.9730, -9.4655, -3.4345)$ em apenas 34 iterações, quando a solução real do problema era $(0,5,-10,-6).$ Veja o resultado na Figura \ref{fig2} (a).
+		Seja $x_0 = (1, 0, 0,0)$ e o parâmetro de $damping$ DP3 em um dos conjuntos de dados a serem analisados pela função cúbica. O resultado do método foi o ponto $x^* = (-0.0517, 3.9730, -9.4655, -3.4345)$ em apenas 24 iterações, quando a solução real do problema era $(0,5,-10,-6).$ Veja o resultado na Figura \ref{fig2} (a).
 	
-	Vamos realizar os mesmos testes, porém desconsiderando a perturbação. Com o parâmetro $0.5$ obtemos o ponto $x^* = (-4.1319.10^{-14}, 4.9999, -9.9999,$ $ -5.9999)$ em 6 iterações. Observe na Figura \ref{fig2} (b).
+	Realizamos os mesmos testes, porém desconsiderando a perturbação. Com o parâmetro $0.5$ obtemos o ponto $x^* = (-4.1319.10^{-14}, 4.9999, -9.9999,$ $ -5.9999)$ em 6 iterações. Observe na Figura \ref{fig2} (b).
 	
 	\begin{figure}[H]
 		\centering 
@@ -285,16 +285,16 @@ portuguese] % Para algoritmos em português.
 			DP1 & 13.373 & 13.7759\\
 			\hline
 			DP2 & 998.8968 & 11.4691\\ \hline
-			DP3 & 57.4285 & 13.7759\\ \hline
+			DP3 & 49.9761 & 13.7759\\ \hline
 			DP4 & 953.4047 & 9.5601\\ \hline
-			DP5 & 355.623 & 13.7759\\ \hline
-			0.5 & 42.1825 & 13.7759\\		\hline	
+			DP5 & 359.9047 & 13.7759\\ \hline
+			0.5 & 46.0992 & 13.7759\\		\hline	
 			
 		\end{tabular}
 	\end{table}
 
 	\subsection{Função Logarítmica} \label{log}
-		Podemos considerar $x_0=(1, 2.5, -5.5)$ e o parâmetro DP3 encontramos o ponto $x^*=(0.7820, 5.9543, -8.6827),$ porém atingiu o número máximo de iterações, 1000.
+		Podemos considerar $x_0=(1, 2.5, -5.5)$ e o parâmetro DP3 encontramos o ponto $x^*=(0.7820, 3.9543, -8.6827),$ porém atingiu o número máximo de iterações, 1000.
 		
 		O resultado pode ser visto na Figura \ref{fig3} (a).
 	
@@ -312,7 +312,7 @@ portuguese] % Para algoritmos em português.
 	\end{figure}
 	
 	
-	Foram consideradas apenas 10 conjuntos de dados para os testes. O ponto inicial considerado foi $x_0 = (1, 10, 10).$ A função logarítmica obteve resultado com um número bem maior de iterações. Contudo, mais uma vez, o parâmetro DP1 foi o que obteve maior sucesso, e o que vale destacar foi a média do erro, que foi bem menor comparado aos outros parâmetros.
+	Foram consideradas 250 conjuntos de dados para os testes. O ponto inicial considerado foi $x_0 = (1, 10, 10).$ A função logarítmica obteve resultado com um número bem maior de iterações. Contudo, mais uma vez, o parâmetro DP1 foi o que obteve maior sucesso, e o que vale destacar foi a média do erro, que foi bem menor comparado aos outros parâmetros.
 	
 	\begin{table}[H]
 		\centering
@@ -321,10 +321,10 @@ portuguese] % Para algoritmos em português.
 			Parâmetro & Média das iterações & Média do erro\\
 			\hline
 			
-			DP1 & 627.8 & 6.6983\\
+			DP1 & 586.9 & 5.6312\\
 			\hline
 			DP2 & 900 & 17.3617\\ \hline
-			DP3 & 820.6 & 160.8291\\ \hline
+			DP3 & 820.6 & 160.8292\\ \hline
 			DP4 & 900 & 19.7859\\ \hline
 			DP5 & 816.1 & 45.7833\\ \hline
 			0.5 & 740.5 & 11.3073\\		\hline	
@@ -333,7 +333,7 @@ portuguese] % Para algoritmos em português.
 	\end{table}
 
 	\subsection{Função Gaussiana} \label{gau}
-	Apliquemos o método em uma função gaussiana. Seja $x_0 = (1, 10, 10)$ e o parâmetro de $damping$ DP3, obtivemos o ponto $x^* = (-4.5002, -2.9811,7.0802)$ em apenas 61 iterações, e a solução do problema é $(-4.5, -3, -7).$ Veja o resultado na Figura \ref{fig4} (a).
+	Apliquemos o método em uma função gaussiana. Seja $x_0 = (1, 10, 10)$ e o parâmetro de $damping$ DP3, obtivemos o ponto $x^* = (-4.5002, -2.9811,7.0802)$ em apenas 62 iterações, e a solução do problema é $(-4.5, -3, -7).$ Veja o resultado na Figura \ref{fig4} (a).
 	
 	Sem a perturbação e com o parâmetro $0.5,$ encontramos o ponto $x^* = (-4.5,-3, 7)$ em 76 iterações. Observe na Figura \ref{fig4} (b).
 	
@@ -360,9 +360,9 @@ portuguese] % Para algoritmos em português.
 			Parâmetro & Média das iterações & Média do erro\\
 			\hline
 			
-			DP3 & 445.5 & 80.5061\\ \hline
-			DP4 & 1000 & 15.0798\\ \hline
-			DP5 & 1000 & 13.4543\\ \hline
+			DP3 & 446.0 & 80.5062\\ \hline
+			DP4 & 1000.0 & 15.0798\\ \hline
+			DP5 & 1000.0 & 13.4543\\ \hline
 			0.5 & 797.5 & 9.8600\\		\hline	
 			
 		\end{tabular}
