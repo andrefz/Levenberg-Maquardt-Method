@@ -5,7 +5,7 @@ Marquardt para problema de quadrados mínimos.
 
 [Relatório com testes de desempenho][relatorio-lm]
 
-[relatorio-lm]: https://github.com/andrefz/Levenberg-Marquardt-Method/blob/main/tex/Levenberg_Maquardt_Method.pdf
+[relatorio-lm]: https://github.com/andrefz/Levenberg-Marquardt-Method/blob/main/tex/Levenberg_Marquardt_Method.pdf
 
 
 ## Reprodutibilidade
