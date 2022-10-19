@@ -386,9 +386,12 @@ portuguese] % Para algoritmos em português.
 	f(x) = \frac{1}{2}||R(x)||^2.
 	\end{equation*}
 	
-	A seguir, na Seção \ref{lm} vimos a abordagem proposta por Levenberg e aprimorada por Marquardt para resolver tal problema. Consequentemente, estudamos o parâmetro de $damping,$ que pudemos observar pelos resulados vistos na Seção \ref{testes} possui grande influência no resultado encontrado pelo algoritmo abordado na Seção \ref{algoritmo}, principalmente em relação ao número de iterações necessárias para a convergência do método.
+	A seguir, na Seção \ref{lm} estudamos a abordagem proposta por Levenberg e aprimorada por Marquardt para resolver tal problema. 
+	Os experimentos numéricos indicam que o parâmetro de $damping$ DP1 convergiu para a solução aproximada em um número de iterações
+	muito inferior aos outros avaliados. Além disso, com um valor fixo de \textit{damping} $\alpha=0.5$, o algoritmo apresentou
+	resultados similares ou superiores em comparação aos demais parâmetros.
 	
-	Por fim, vale destacar que pudemos comprovar a boa convergência do método em muitos casos, além de expor resultados numéricos do uso do algoritmo.
+	Por fim, vale destacar que pudemos comprovar a boa convergência do método em muitos casos.
 	
 	
 	\nocite{aes}
