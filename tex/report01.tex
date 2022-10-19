@@ -46,9 +46,9 @@ portuguese] % Para algoritmos em português.
 	$$R(x)=\begin{bmatrix}
 	r_1(x)\\ \vdots \\ r_m(x)
 	\end{bmatrix}.$$ Com isso, reescrevemos o problema \begin{equation}
-	f(x) = \frac{1}{2}\sum_{i=1}^{m}r_i^2(x).
+	f(x) = \frac{1}{2}\sum_{i=1}^{m}r_i^2(x),
 	\end{equation}
-	Cada $r_i$ é chamada de função residual.
+	onde cada $r_i$ é chamada de função residual.
 	
 	Definamos $J(x)$ como a matriz jacobiana de $f,$ assim
 	\[
@@ -68,16 +68,15 @@ portuguese] % Para algoritmos em português.
 
 	$1 \leq i \leq m$, $1 \leq j \leq m$.
 		
-	Desta forma, podemos reescrever a derivada de primeira e segunda ordem da função $f,$ de modo diminuir o custo computacional. Veja,
+	Desta forma, podemos reescrever a derivada de primeira e segunda ordem da função $f,$ de modo à diminuir o custo computacional. Veja,
 	
 	\[\nabla f(x) = \sum_{i=1}^{m} r_i(x)\nabla r_i(x) = J(x)^{T}r(x)\]
 	
 	\[\nabla^{2} f(x) = \sum_{i=1}^{m} \nabla r_i(x)\nabla r_i(x)^{T}
 	+ \sum_{i=1}^{m} r_i(x) \nabla^{2}r_i(x) = J(x)^{T}J(x) + S(x)\]
-	
 	com $S(x) = \sum_{i=1}^{m} r_i(x)\nabla^{2}r_i(x).$
 	
-	Com isso, é necessário o cálculo do vetor gradiente da função $f,$ bem como o produto matricial $(J(x)^{T}J(x)$ e o termo $r_i(x)\nabla^{2}$ para encontrar $S(x).$ Contudo, o valor de $S(x)$ não influência tanto o método quanto o termo que o acompanha, $(J(x)^{T}J(x))$ devido ao valor residual ser pequeno ou ao comportamento próximo ao da função ao redor do ponto de convergência, por isso, muitas vezes podemos desconsiderar seu uso.
+	Com isso, é necessário o cálculo do vetor gradiente da função $f,$ bem como o produto matricial $J(x)^{T}J(x)$ e o termo $r_i(x)\nabla^{2}$ para encontrar $S(x).$ Contudo, o valor de $S(x)$ não influência tanto o método quanto o termo que o acompanha, $J(x)^{T}J(x)$ devido ao valor residual ser pequeno ou ao comportamento próximo ao da função ao redor do ponto de convergência, por isso, muitas vezes podemos desconsiderar seu uso.
 	
 	\section{Método de Levenberg-Marquardt}\label{lm}
 	
@@ -86,11 +85,11 @@ portuguese] % Para algoritmos em português.
 	\begin{equation*} 
 	(J(x_0)^{T}J(x_0) + \lambda_0 I ) d(\lambda_0) = - J(x_0)^T R(x_0),
 	\end{equation*}
-	sendo $J, R$ já estabelecidos previamente e $\lambda \in \mathbb{R}_+$ o paramêtro que será discutido posteriormente, chamado paramêtro de $damping.$ Vamos encontrar $d(\lambda),$ uma direção mais próxima da solução do problema proposto.
+	sendo $J, R$ já estabelecidos previamente e $\lambda \in \mathbb{R}_+$ o parâmetro que será discutido posteriormente, chamado parâmetro de $damping.$ Vamos encontrar $d(\lambda),$ uma direção mais próxima da solução do problema proposto.
 	
 	Assim, considerando $x_1 = x_0 + d,$ podemos resolver \ref{sl} continuamente, até encontramos $x_k$ que satisfaça a condição estabelecida.
 	
-	Veja que este sistema possui solução única, uma vez que a matriz $J^{T}J + \lambda I,$ com $\lambda > 0$ é definida positiva. Portando, o método está bem definido. Além disso, os resultados a seguir garantem o bom funcionamento do método.
+	Veja que este sistema possui solução única, uma vez que a matriz $J^{T}J + \lambda I,$ com $\lambda > 0$ é definida positiva. Portanto, o método está bem definido. Além disso, os resultados a seguir garantem o bom funcionamento do método.
 	
 	\begin{teo}
 		Seja $d(\lambda)$ a solução do problema 
@@ -110,7 +109,7 @@ portuguese] % Para algoritmos em português.
 	
 	Por outro lado, as direções consideradas pelo método de Gauss - Newton são da forma 
 	
-	\[ (J(x_k)^{T}J(x_k)d_k = -J^T(x_k)R(x_k). \]
+	\[ J(x_k)^{T}J(x_k)d_k = -J^T(x_k)R(x_k). \]
 	
 	Contudo, o método desenvolvido por Levenberg e melhorado por Marquardt mantém o baixo custo computacional do método de Gauss-Newton e o supera quanto a eficácia de seus iterandos, que estão sempre bem definidos independentemente do problema.
 		
@@ -206,12 +205,17 @@ portuguese] % Para algoritmos em português.
 	
 	Foi estabelecida uma precisão de $\epsilon = 10^{-10},$ o valor $\alpha = 0.5$ e um número máximo de iterações $k=1000$ para cada conjunto de dados fornecidos.
 	
-	Os nossos testes foram separados em quatro modelos de funções, sendo eles funções quadráticas(Subseção \ref{quad}), cúbicas (Subseção \ref{cub}), logarítmicas (Subseção \ref{log}) e gaussianas (Subseção \ref{gau}).
+	Os nossos testes foram separados em quatro modelos de funções, sendo eles funções quadráticas (Subseção \ref{quad}), cúbicas (Subseção \ref{cub}), logarítmicas (Subseção \ref{log}) e gaussianas (Subseção \ref{gau}).
+	
+	Para todos os modelos de funções, realizamos experimentos em um único conjunto de pontos, avaliando a matriz de dados com e sem
+	perturbações, e também, executamos o algoritmo em vários conjuntos de dados, com o objetivo de de avaliar o parâmetro de $damping$ e a taxa de sucesso do algoritmo.
+	
+	Os parâmetros de avaliação foram o número médio de iterações e a média do erro, definido como $||x^*-sol||,$ onde $sol$ é a solução real do problema.
 	
 	\subsection{Função Quadrática}\label{quad}
-	Inicialmente, consideramos $x_0 = (1, 0, 0)$ e o parâmetro de $damping$ DP3 em um dos conjuntos de dados a serem analisados pela função quadrática. O resultado do método foi o ponto $x^* = (-1.6568, -6.0813, 0.1420)$ em apenas 14 iterações, quando a solução real do problema era $(-9.5, -8.5, 2.5).$ Veja o resultado na Figura \ref{fig1} (a).
+	Inicialmente, consideramos $x_0 = (1, 0, 0)$ e o parâmetro de $damping$ DP3 em um dos conjuntos de dados a serem analisados pela função quadrática. O resultado do método foi o ponto $x^* = (-1.6568, -6.0813, 0.1420)$ em apenas 14 iterações, enquanto a solução real do problema é $(-9.5, -8.5, 2.5).$ Veja o resultado na Figura \ref{fig1} (a).
 	
-	Utilizamos o programa para retirar a perturbação da matriz de dados e aplicamos no método. Com isso, naturalmente,  obtemos uma solução melhor para o problema e consideravelmente próxima da solução dada. Obtemos, com o parâmetro DP1 o ponto $x^* = (-9.4999, -8.4999, 2.4999)$ em 73 iterações. Observe na Figura \ref{fig1} (b).
+	Utilizamos o programa para retirar a perturbação da matriz de dados e aplicamos no método. Com isso, naturalmente,  obtemos uma melhor solução  para o problema, consideravelmente próxima da solução dada. Obtemos, com o parâmetro DP3 o ponto $x^* = (-9.5, -8.5, 2.5)$ em 24 iterações. Observe na Figura \ref{fig1} (b).
 	
 		\begin{figure}[H]
 		\centering 
@@ -229,9 +233,7 @@ portuguese] % Para algoritmos em português.
 
 	Ademais, como um teste geral foram avaliados 262 conjuntos de dados com aproximações quadráticas em cada um dos parâmetros, bem como para o valor fixado $\lambda = 0.5.$ O ponto inicial foi $x_0 = (0, 0, 0).$
 	
-	Sendo avaliado o número médio de iterações para cada conjunto e também a média de erro é definida por $||x^*-sol||,$ onde $sol$ é a solução real do problema.
-	
-	Foi possível perceber que para os parâmetros DP1, DP3, DP4, DP5 e $0.5$ como valor fixado foi possível encontrar soluções com baixa taxa de erro. Vale a pena destacar que o parâmetro DP1 obteve esse resultado com uma média de poucas iterações, sendo o mais eficiente.
+	Foi possível perceber que para os parâmetros DP1, DP3, DP4, DP5 e $0.5$ como valor fixado, foi possível encontrar soluções com baixa taxa de erro. Vale a pena destacar que o parâmetro DP1 obteve esse resultado com uma média de poucas iterações, sendo o mais eficiente.
 	
 	Vale notar que na maioria dos casos a maior diferença entre os resultados obtidos por parâmetros diferentes é o número médio de iterações.
 	
@@ -253,9 +255,9 @@ portuguese] % Para algoritmos em português.
 		\end{tabular}
 	\end{table}
 	\subsection{Função Cúbica} \label{cub}
-		Seja $x_0 = (1, 0, 0,0)$ e o parâmetro de $damping$ DP3 em um dos conjuntos de dados a serem analisados pela função cúbica. O resultado do método foi o ponto $x^* = (-0.0517, 3.9730, -9.4655, -3.4345)$ em apenas 24 iterações, quando a solução real do problema era $(0,5,-10,-6).$ Veja o resultado na Figura \ref{fig2} (a).
+		Seja $x_0 = (1, 0, 0,0)$ e o parâmetro de $damping$ DP3 em um dos conjuntos de dados a serem analisados pela função cúbica. O resultado do método foi o ponto $x^* = (-0.0517, 3.9730, -9.4655, -3.4345)$ em apenas 24 iterações, enquanto a solução real do problema era $(0,5,-10,-6).$ Veja o resultado na Figura \ref{fig2} (a).
 	
-	Realizamos os mesmos testes, porém desconsiderando a perturbação. Com o parâmetro $0.5$ obtemos o ponto $x^* = (-4.1319.10^{-14}, 4.9999, -9.9999,$ $ -5.9999)$ em 6 iterações. Observe na Figura \ref{fig2} (b).
+	Realizamos os mesmos testes, porém desconsiderando a perturbação. Com o parâmetro DP3 obtemos o ponto $x^* = (1.2181.10^{-16}, 5.0, -10.0, -5.9999)$ em apenas 27 iterações. Observe na Figura \ref{fig2} (b).
 	
 	\begin{figure}[H]
 		\centering 
@@ -271,7 +273,7 @@ portuguese] % Para algoritmos em português.
 	\end{figure}
 	
 	
-	Ademais, como um teste geral foram avaliados 252 conjuntos de dados com aproximações cúbicas em cada um dos parâmetros, bem como para o valor fixado $\lambda = 0.5.$ Tomando novamente $x_0 = (0, 0, 0, 0)$ obtivemos um resultado semelhante ao das funções quadráticas, apenas com uma taxa de erro maior. Outra vez, o parâmetro DP1 obteve o mesmo resultado em um número menor de iterações.
+	Ademais, como um teste geral foram avaliados 252 conjuntos de dados com aproximações cúbicas em cada um dos parâmetros, bem como para o valor fixado $\lambda = 0.5.$ Tomando novamente $x_0 = (0, 0, 0, 0)$ obtivemos um resultado semelhante ao das funções quadráticas, apenas com uma taxa de erro maior. Novamente, o parâmetro DP1 obteve o melhor resultado com relação ao número de iterações.
 	
 	Na maioria dos casos a maior diferença entre os resultados obtidos por parâmetros diferentes continua sendo o número médio de iterações.
 	
@@ -294,9 +296,13 @@ portuguese] % Para algoritmos em português.
 	\end{table}
 
 	\subsection{Função Logarítmica} \label{log}
-		Podemos considerar $x_0=(1, 2.5, -5.5)$ e o parâmetro DP3 encontramos o ponto $x^*=(0.7820, 3.9543, -8.6827),$ porém atingiu o número máximo de iterações, 1000.
-		
-		O resultado pode ser visto na Figura \ref{fig3} (a).
+		Podemos considerar $x_0=(1, 10, 10)$ e o parâmetro DP3. A análise em um único conjunto de dados
+		forneceu o ponto $x^*=(0.2550, 232.8216, 214.2468),$  muito divergente da solução real, também atingindo o número
+		máximo de iterações, 1000. O resultado pode ser visto na Figura \ref{fig3} (a).
+	    
+	   Com a análise com parâmetro DP3 e a matriz sem perturbações obtivemos
+	   $x^* = (0.27102, 149.6531, 149.1531)$, também atingindo o número máximo
+	   de iterações. Como ilustra a Figura \ref{fig4} (b).
 	
 	\begin{figure}[H]
 		\centering 
@@ -312,7 +318,7 @@ portuguese] % Para algoritmos em português.
 	\end{figure}
 	
 	
-	Foram consideradas 10 conjuntos de dados para os testes. O ponto inicial considerado foi $x_0 = (1, 10, 10).$ A função logarítmica obteve resultado com um número bem maior de iterações. Contudo, mais uma vez, o parâmetro DP1 foi o que obteve maior sucesso, e o que vale destacar foi a média do erro, que foi bem menor comparado aos outros parâmetros.
+	Foram consideradas 10 conjuntos de dados para os testes gerais. O ponto inicial considerado foi $x_0 = (1, 10, 10).$ A função logarítmica obteve resultados com um número bem maior de iterações com relação aos outros problemas. Contudo, mais uma vez, o parâmetro DP1 foi o que obteve maior sucesso, e o que vale destacar foi a média do erro, que foi bem menor comparado aos outros parâmetros.
 	
 	\begin{table}[H]
 		\centering
@@ -333,9 +339,9 @@ portuguese] % Para algoritmos em português.
 	\end{table}
 
 	\subsection{Função Gaussiana} \label{gau}
-	Apliquemos o método em uma função gaussiana. Seja $x_0 = (1, 10, 10)$ e o parâmetro de $damping$ DP3, obtivemos o ponto $x^* = (-4.5002, -2.9811,7.0802)$ em apenas 62 iterações, e a solução do problema é $(-4.5, -3, -7).$ Veja o resultado na Figura \ref{fig4} (a).
+	Para a função gaussiana, consideramos o ponto $x_0 = (1, 10, 10)$ e o parâmetro de $damping$ DP3, obtivemos o ponto $x^* = (-4.5002, -2.9811,7.0802)$ em apenas 62 iterações, e a solução do problema é $(-4.5, -3, -7).$ Veja o resultado na Figura \ref{fig4} (a).
 	
-	Sem a perturbação e com o parâmetro $0.5,$ encontramos o ponto $x^* = (-4.5,-3, 7)$ em 76 iterações. Observe na Figura \ref{fig4} (b).
+	Sem a perturbação dos dados e com o parâmetro DP3, encontramos o ponto $x^* = (-4.5,-2.9999, 6.9999)$ em 52 iterações. Observe na Figura \ref{fig4} (b).
 	
 	\begin{figure}[H]
 		\centering 
@@ -380,7 +386,7 @@ portuguese] % Para algoritmos em português.
 	f(x) = \frac{1}{2}||R(x)||^2.
 	\end{equation*}
 	
-	A seguir, na Seção \ref{lm} vimos a abordagem proposta por Levenberg e aprimorada por Marquardt para resolver tal problema. Dando consequência, estudamos o parâmetro de $damping,$ que pudemos observar pelos resulados vistos na Seção \ref{testes} possui grande influência no resultado encontrado pelo algoritmo abordado na Seção \ref{algoritmo}, principalmente em relação ao número de iterações necessárias para a convergência do método.
+	A seguir, na Seção \ref{lm} vimos a abordagem proposta por Levenberg e aprimorada por Marquardt para resolver tal problema. Consequentemente, estudamos o parâmetro de $damping,$ que pudemos observar pelos resulados vistos na Seção \ref{testes} possui grande influência no resultado encontrado pelo algoritmo abordado na Seção \ref{algoritmo}, principalmente em relação ao número de iterações necessárias para a convergência do método.
 	
 	Por fim, vale destacar que pudemos comprovar a boa convergência do método em muitos casos, além de expor resultados numéricos do uso do algoritmo.
 	
